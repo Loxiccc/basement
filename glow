@@ -1,0 +1,33 @@
+                                                                                                                                                                                                                                                                                                                                                local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+
+-- Function to highlight the player's character
+local function highlightCharacter(character)
+    -- Remove existing highlight if any
+    for _, v in pairs(character:GetChildren()) do
+        if v:IsA("Highlight") then
+            v:Destroy()
+        end             
+    end
+    
+    -- Create a new highlight
+    local highlight = Instance.new("Highlight")
+    highlight.FillColor = Color3.new(1, 1, 0)  -- Yellow color
+    highlight.OutlineColor = Color3.new(0, 0, 0)  -- Black outline
+    highlight.Parent = character
+end
+
+-- Function to reset highlights every second
+local function resetHighlights()
+    while true do
+        for _, player in pairs(Players:GetPlayers()) do
+            if player ~= localPlayer and player.Character then
+                highlightCharacter(player.Character)
+            end
+        end
+        wait(1)  -- Wait for 1 second
+    end
+end
+
+-- Start the reset loop
+resetHighlights()
